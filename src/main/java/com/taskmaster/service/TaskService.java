@@ -3,6 +3,7 @@ package com.taskmaster.service;
 import com.taskmaster.model.Task;
 import com.taskmaster.repository.TaskRepository;
 import org.springframework.stereotype.Service;
+import com.taskmaster.exception.TaskNotFoundException;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class TaskService {
     public Task getTask(Long id) {
         return repository.findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException("Task not found with id: " + id));
+                        new TaskNotFoundException("Task not found with id: " + id));
     }
 
     public Task createTask(Task task) {
