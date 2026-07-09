@@ -53,11 +53,11 @@ Status: 🔄 IN PROGRESS
 - [x] Custom Exception
 - [x] Global Exception Handler
 - [x] Error Response DTO
-- [ ] Bean Validation
-- [ ] Logging
-- [ ] Spring Boot Actuator
-- [ ] Prometheus Metrics
-- [ ] Bootstrap UI
+- [x] Bean Validation
+- [x] Logging
+- [x] Spring Boot Actuator
+- [x] Prometheus Metrics
+- [x] Bootstrap UI
 
 ---
 
