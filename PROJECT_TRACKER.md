@@ -49,10 +49,10 @@ Status: ✅ COMPLETED
 
 Status: 🔄 IN PROGRESS
 
-- [ ] Project Tracker
-- [ ] Custom Exception
-- [ ] Global Exception Handler
-- [ ] Error Response DTO
+- [x] Project Tracker
+- [x] Custom Exception
+- [x] Global Exception Handler
+- [x] Error Response DTO
 - [ ] Bean Validation
 - [ ] Logging
 - [ ] Spring Boot Actuator
