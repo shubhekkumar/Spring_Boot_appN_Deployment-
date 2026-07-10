@@ -59,12 +59,18 @@ module "ecs" {
 
   aws_region = var.aws_region
 
+
   execution_role_arn = module.iam.execution_role_arn
 
   task_role_arn = module.iam.task_role_arn
+
 
   log_group_name = module.cloudwatch.log_group_name
 
   ecr_repository_url = module.ecr.repository_url
 
+
+  subnet_id = module.network.public_subnet_id
+
+  security_group_id = module.security.security_group_id
 }

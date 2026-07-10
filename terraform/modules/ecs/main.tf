@@ -68,3 +68,28 @@ resource "aws_ecs_task_definition" "taskmaster" {
     }
   ])
 }
+
+
+resource "aws_ecs_service" "taskmaster" {
+
+  name = "${var.project_name}-${var.environment}-service"
+
+  cluster = aws_ecs_cluster.main.id
+
+  task_definition = aws_ecs_task_definition.taskmaster.arn
+
+  desired_count = 1
+
+  launch_type = "FARGATE"
+
+  network_configuration {
+
+    subnets = [var.subnet_id]
+
+    security_groups = [var.security_group_id]
+
+    assign_public_ip = true
+
+  }
+
+}

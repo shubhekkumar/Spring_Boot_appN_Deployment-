@@ -25,3 +25,11 @@ variable "log_group_name" {
 variable "ecr_repository_url" {
   type = string
 }
+
+variable "subnet_id" {
+  type = string
+}
+
+variable "security_group_id" {
+  type = string
+}
