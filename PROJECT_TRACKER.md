@@ -63,21 +63,21 @@ Status: 🔄✅ COMPLETED
 
 ## Sprint 3 – Docker
 
-Status: ⏳ PENDING
+Status: ✅  Completed
 
-- [ ] Multi-stage Dockerfile
-- [ ] Docker Ignore
-- [ ] Docker Build
-- [ ] Docker Testing
+- [x] Multi-stage Dockerfile
+- [x] Docker Ignore
+- [x] Docker Build
+- [x] Docker Testing
 
 ---
 
 ## Sprint 4 – Terraform
 
-Status: ⏳ PENDING
+Status: 🔄 IN-PROGRESS
 
-- [ ] Provider
-- [ ] VPC
+- [X] Provider
+- [X] VPC
 - [ ] Security Groups
 - [ ] IAM
 - [ ] ECR
