@@ -1,0 +1,47 @@
+# Git
+.git
+.gitignore
+
+# Gradle cache
+.gradle
+
+# Build output
+build
+
+# IDE
+.idea
+.vscode
+
+# Terraform
+terraform
+
+# Monitoring
+monitoring
+
+# Documentation
+docs
+
+# Project tracking
+PROJECT_TRACKER.md
+
+# Docker files not needed in build context
+docker/*.md
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.*
+
+# Output files
+*.out
+
+# Spring project docs
+README.md
+HELP.md
+images
