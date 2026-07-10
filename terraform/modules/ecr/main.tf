@@ -2,8 +2,10 @@ resource "aws_ecr_repository" "taskmaster" {
 
   name = "${var.project_name}-${var.environment}"
 
-  image_tag_mutability = "MUTABLE"
+  force_delete = true  
 
+  image_tag_mutability = "MUTABLE"
+  
   image_scanning_configuration {
     scan_on_push = true
   }

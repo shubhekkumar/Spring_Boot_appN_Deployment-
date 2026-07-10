@@ -78,7 +78,7 @@ resource "aws_ecs_service" "taskmaster" {
 
   task_definition = aws_ecs_task_definition.taskmaster.arn
 
-  desired_count = 1
+  desired_count = 0
 
   launch_type = "FARGATE"
 
