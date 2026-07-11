@@ -1,4 +1,4 @@
-name: TaskMaster CI
+name: TaskMaster CI/CD
 
 on:
   push:
@@ -6,13 +6,12 @@ on:
       - main
 
 jobs:
+
   build:
-    
     name: Build Spring Boot
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout Repository
         uses: actions/checkout@v4
 
@@ -28,7 +27,7 @@ jobs:
       - name: Build Application
         run: ./gradlew clean build
 
- terraform:
+  terraform:
     name: Terraform Validation
     needs: build
     runs-on: ubuntu-latest
