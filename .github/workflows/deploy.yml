@@ -28,7 +28,7 @@ jobs:
         run: ./gradlew clean build
 
   terraform:
-    name: Terraform Validation
+    name: Terraform Apply
     needs: build
     runs-on: ubuntu-latest
 
@@ -49,7 +49,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
-          
+
       - name: Terraform Format Check
         run: terraform fmt -check -recursive
 
@@ -62,5 +62,67 @@ jobs:
       - name: Terraform Plan
         run: terraform plan -out=tfplan
 
-      - name: Terraform Destroy
-        run: terraform destroy -auto-approve
+      - name: Terraform Apply
+        run: terraform apply -auto-approve tfplan
+
+  docker:
+    name: Build & Push Docker Image
+    needs: terraform
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build Docker Image
+        run: |
+          docker build \
+            -t taskmaster:latest \
+            -f docker/Dockerfile .
+
+      - name: Tag Docker Image
+        run: |
+          docker tag taskmaster:latest \
+          ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/taskmaster-dev:latest
+
+      - name: Push Docker Image
+        run: |
+          docker push \
+          ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/taskmaster-dev:latest
+
+  deploy:
+    name: Deploy to ECS
+    needs: docker
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Start ECS Service
+        run: |
+          aws ecs update-service \
+            --cluster taskmaster-dev-cluster \
+            --service taskmaster-dev-service \
+            --desired-count 1 \
+            --force-new-deployment
+
+      - name: Wait for ECS Service
+        run: |
+          aws ecs wait services-stable \
+            --cluster taskmaster-dev-cluster \
+            --services taskmaster-dev-service
